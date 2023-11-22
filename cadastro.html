@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="cadastro.css">
+</head>
+<body>
+    <header>
+        <a href="index.html">Voltar</a>
+        <h1>Cadastro</h1>
+    </header>
+    <form onsubmit="return false">
+        <h2>Cadastre-se</h2>
+        <input type="text" placeholder="Nome" id="nome" required>
+        <input type="date"  id="nascimento" required>
+        <input type="number"  id="cep" placeholder="CEP" required min="11111111" max="99999999">
+        <input type="email" placeholder="email" id="email" required>
+        <input type="password"  id="senha" placeholder="senha" required>
+        <input class="button" onclick="salvarEmJSON()" type="submit" value="Cadastrar">
+    </form>
+    <script>
+        function salvarEmJSON() {
+          const formData = {
+            nome: document.getElementById('nome').value,
+            nascimento: document.getElementById('nascimento').value,
+            cep: document.getElementById('cep').value,
+            email: document.getElementById('email').value,
+            senha: document.getElementById('senha').value
+          };
+    
+          fetch('/salvar-em-json', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+          })
+          .then(response => response.json())
+          .then(data => alert(data.message))
+          .catch(error => console.error('Erro:', error));
+        }
+      </script>
+    <script src="cadastro.js"></script>
+</body>
+</html>
